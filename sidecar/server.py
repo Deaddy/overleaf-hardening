@@ -5,6 +5,7 @@ from time import sleep
 import os
 import pprint
 import subprocess
+import re
 
 
 # latex commands look like this:
@@ -15,6 +16,7 @@ TEXLIVE_IMAGE=os.environ.get('TEXLIVE_IMAGE',
 UID=os.environ.get('SHARELATEX_UID', '33')
 GID=os.environ.get('SHARELATEX_UID', '33')
 TIMEOUT=os.environ.get("COMPILE_TIMEOUT", 600)
+INFILE_REGEX="[a-zA-Z0-9\ _-]+\.tex"
 
 #CMD_TEMPLATE="timeout {timeout} podman run -u{uid}:{gid} -v {auxdir}:{auxdir} --network=none {image} {command}"
 CMD_TEMPLATE="timeout {timeout} podman run -u{uid}:{gid} -v {auxdir}:/mnt --network=none {image} {command}"
@@ -37,6 +39,13 @@ def callback():
     }
     latexmk_args["infile"] = latexmk_args["infile"].removeprefix(
         latexmk_args["auxdir"] + "/")
+    if not re.match(INFILE_REGEX, latexmk_args["infile"]):
+      return "Error: We only support input files with letters, underscores, hyphens and spaces in the filaneme before the .tex"
+    if len(latexmk_args["infile"]) > 64:
+      return "64 characters should be enough for everone"
+
+    latexmk_args["infile"] = '"%s"'%latexmk_args["infile"]
+
     latexmk = LATEX_COMMAND_TEMPLATE.format_map(latexmk_args)
 
     args = {

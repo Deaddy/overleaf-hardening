@@ -8,6 +8,9 @@ None of these require modifying overleaf in any way but work by swapping out
 the `latexmk` binary.
 This should work for pretty much any overleaf release from 2.x.x to 5.x.x.
 
+If you want to display things to the user, the best way would be to write it
+to `output.log` as it is consumed by the webinterface.
+
 ## Overview of this repo
 
 - `latexmk-noop.py` proof of concept python file which you put in place of
@@ -19,10 +22,13 @@ This should work for pretty much any overleaf release from 2.x.x to 5.x.x.
 
 ## See also
 
-Oliver Cordes'
-[sharelatex-isolation](https://github.com/ocordes/sharelatex-isolation)
-provides isolation via `LD_PRELOAD`, allowing one to harden `latexmk` without
-needing to use chroots or containers or different build hosts.
+- Oliver Cordes'
+  [sharelatex-isolation](https://github.com/ocordes/sharelatex-isolation)
+  provides isolation via `LD_PRELOAD`, allowing one to harden `latexmk`
+  without needing to use chroots or containers or different build hosts.
+- Torben Gotowik's
+  [overleaf-isolation](https://github.com/tgotowik/overleaf-isolation) via
+  apptainer, essentially following a similar approach to this one
 
 ## Acknowledgements
 
