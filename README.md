@@ -29,3 +29,4 @@ needing to use chroots or containers or different build hosts.
 Special thanks go out to Torben Gotowik from Uni Paderborn and Benedikt
 Bieringer from Uni Muenster for raising the issue and helping me understand
 the application side of things.
+Also thanks to @vincentscode for prodividing convincing exploits.
